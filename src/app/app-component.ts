@@ -5,6 +5,7 @@ import { TaskList} from './task-list/task-list';
 //import { TaskService } from './services/task-service';
 //import { App } from './app';
 @Component({
+  standalone: true,
   selector: 'app-root',
   imports: [TaskList],
   template: `

@@ -3,6 +3,7 @@ import { Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task.model';
 
 @Component({
+  standalone: true,
   selector: 'app-task-item',
   imports: [],
   template: `

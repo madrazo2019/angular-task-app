@@ -6,6 +6,7 @@ import { EventEmitter } from '@angular/core';
 import { TaskItem}  from '../task-item/task-item';
 
 @Component({
+  standalone: true,
   selector: 'app-task-list',
   imports: [TaskItem],
 template: `
