@@ -22,7 +22,8 @@ import { finalize } from 'rxjs';
       @for (task of tasks; track task.id) {
         <app-task-item 
           [task]="task" 
-          (remove)="deleteTask($event)">
+          (remove)="deleteTask($event)"
+          (toggleComplete)="toggleTaskComplete($event)">
         </app-task-item>
       } @empty {
         @if (!loading) {
@@ -78,6 +79,24 @@ export class AppComponent implements OnInit {
       }
     });
   }
-}
 
-  
+  toggleTaskComplete(id: number) {
+    const task = this.tasks.find(t => t.id === id);
+    if (task) {
+      const previousCompleted = task.completed;
+      task.completed = !task.completed;
+
+      this.taskService.updateTaskCompletion(id, task.completed).subscribe({
+        next: () => {
+          console.log(`Tarea ${id} marcada como ${task.completed ? 'completada' : 'incompleta'}`);
+        },
+        error: () => {
+          // Si falla, revertimos el cambio
+          task.completed = previousCompleted;
+          alert('Error al actualizar el estado de la tarea');
+          console.error(`Error al actualizar la tarea ${id}`);
+        }
+      });
+    }
+  }
+}

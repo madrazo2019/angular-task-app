@@ -35,6 +35,16 @@ export class TaskService {
       })
     );
    }
+
+  // Actualizar el estado completado de una tarea
+  updateTaskCompletion(id: number, completed: boolean): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiBaseUrl}/${id}`, { completed }).pipe(
+      catchError(error => {
+        console.error(`Error al actualizar la tarea ${id}:`, error);
+        return throwError(() => new Error(`No se pudo actualizar el estado de la tarea. Por favor intente más tarde.`));
+      })
+    );
+   }
   }
     
 

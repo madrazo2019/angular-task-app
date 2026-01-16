@@ -17,11 +17,16 @@ template: `
       <p>Cargando tareas...</p>
     }
 
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
     <div class="container">
       @for (task of tasks; track task.id) {
         <app-task-item 
           [task]="task" 
-          (remove)="deleteTask($event)">
+          (remove)="deleteTask($event)"
+          (toggleComplete)="toggleTask($event)">
         </app-task-item>
       } @empty {
         @if (!loading) {
@@ -41,6 +46,7 @@ export class TaskList {
   @Input() error: string | null = null;
 
 @Output() remove = new EventEmitter<number>();
+@Output() toggleComplete = new EventEmitter<number>();
 
   getTasks() {
     this.loading = true;
@@ -76,5 +82,9 @@ export class TaskList {
         this.tasks = previousTasks;
       }
     });
+  }
+
+  toggleTask(id: number) {
+    this.toggleComplete.emit(id);
   }
 }

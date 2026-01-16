@@ -8,7 +8,11 @@ import { Task } from '../models/task.model';
   imports: [],
   template: `
     <div class="task-card">
-      <input type="checkbox" [checked]="task.completed" disabled />
+      <input 
+        type="checkbox" 
+        [checked]="task.completed" 
+        (change)="onToggleComplete()"
+      />
       <span [class.completed]="task.completed">
         {{ task.title }}
       </span>
@@ -20,9 +24,14 @@ import { Task } from '../models/task.model';
 export class TaskItem {
 
   @Input({ required: true }) task!: Task;
-   @Output() remove = new EventEmitter<number>();
+  @Output() remove = new EventEmitter<number>();
+  @Output() toggleComplete = new EventEmitter<number>();
 
   onRemove() {
     this.remove.emit(this.task.id);
+  }
+
+  onToggleComplete() {
+    this.toggleComplete.emit(this.task.id);
   }
 }
