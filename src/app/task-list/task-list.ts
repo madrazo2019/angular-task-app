@@ -69,7 +69,7 @@ export class TaskList {
     const previousTasks = [...this.tasks];
     this.tasks = this.tasks.filter(t => t.id !== id);
 
-    this.taskService.delete(id).subscribe({
+    this.taskService.deleteTask(id).subscribe({
       error: () => {
         // Si falla, revertimos el cambio (rollback)
         alert('Error al eliminar la tarea');

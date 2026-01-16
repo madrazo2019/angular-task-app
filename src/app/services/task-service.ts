@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
  import { inject } from '@angular/core';
 import { Task } from '../models/task.model';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,19 +13,20 @@ import { map, Observable } from 'rxjs';
 export class TaskService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'https://jsonplaceholder.typicode.com/todos';
+  private apiBaseUrl = `${environment.apiBaseUrl}/todos`;
 
    private tasks: Task[] = [];
   // Obtener la lista de tareas
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl).pipe(
+    return this.http.get<Task[]>(this.apiBaseUrl).pipe(
       map(tasks => tasks.slice(0, 20)) // Limitar a 20 tareas para la demo
     );
-  }
+   }
   // Eliminar una tarea
-  delete(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}/${id}`);
+   }
   }
     
 
-}
+
