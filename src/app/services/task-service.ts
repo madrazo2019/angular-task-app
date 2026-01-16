@@ -45,7 +45,15 @@ export class TaskService {
       })
     );
    }
+   getTaskById(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.apiBaseUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error(`Error al obtener la tarea ${id}:`, error);
+        return throwError(() => new Error(`No se pudo cargar la tarea. Por favor intente más tarde.`));
+      })
+    );
   }
+}
     
 
 
