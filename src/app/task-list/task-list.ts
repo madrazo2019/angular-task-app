@@ -43,14 +43,22 @@ export class TaskList {
 @Output() remove = new EventEmitter<number>();
 
   getTasks() {
+    this.loading = true;
     this.taskService.getTasks()
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: tasks => (this.tasks = tasks),
-        error: err => (this.error = 'No se pudieron cargar las tareas.')
+        next: tasks => {
+          this.tasks = tasks;
+          this.error = null;
+        },
+        error: err => {
+          this.error = 'No se pudieron cargar las tareas.';
+          this.tasks = [];
+          console.error('Error al cargar tareas:', err);
+        }
       });
-
-  }
+   }
+  
 
   ngOnInit() {
     this.getTasks();
