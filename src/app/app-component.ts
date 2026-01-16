@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-root',
   imports: [TaskItem, CommonModule],
   template: `
-  
-<main class="container">
+  <main class="container">
   <section>
     <h2>Lista de Tareas</h2>
     
@@ -42,6 +41,7 @@ import { CommonModule } from '@angular/common';
   styles: ``,
 })
 export class AppComponent implements OnInit {
+  
   private taskService = inject(TaskService);
   
   // Observable subjects para manejar los estados
